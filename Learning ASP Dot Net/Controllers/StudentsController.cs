@@ -1,4 +1,5 @@
-﻿using Learning_ASP_Dot_Net.Data;
+﻿using Learning_ASP_Dot_Net.Behaviours.Interfaces;
+using Learning_ASP_Dot_Net.Data;
 using Learning_ASP_Dot_Net.DTOs;
 using Learning_ASP_Dot_Net.Models;
 using Microsoft.AspNetCore.Http;
@@ -13,9 +14,12 @@ namespace Learning_ASP_Dot_Net.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public StudentsController(ApplicationDbContext context)
+        private IStudentControllBehaviour _studentControllBehaviour;
+
+        public StudentsController(ApplicationDbContext context, IStudentControllBehaviour stud)
         {
             _context = context;
+            _studentControllBehaviour = stud;
         }
 
         // GET: api/students
@@ -41,15 +45,17 @@ namespace Learning_ASP_Dot_Net.Controllers
         [HttpPost]
         public async Task<ActionResult<Student>> CreateStudent(CreateStudentDto dto)
         {
-            var student = new Student
-            {
-                Name = dto.Name,
-                Age = dto.Age,
-                Email = dto.Email
-            };
+            //var student = new Student
+            //{
+            //    Name = dto.Name,
+            //    Age = dto.Age,
+            //    Email = dto.Email
+            //};
 
-            _context.Students.Add(student);
-            await _context.SaveChangesAsync();
+            //_context.Students.Add(student);
+            //await _context.SaveChangesAsync();
+
+            var student = _studentControllBehaviour.CreateStudents(dto);
 
             return CreatedAtAction(nameof(GetStudent), new { id = student.Id }, student);
         }
