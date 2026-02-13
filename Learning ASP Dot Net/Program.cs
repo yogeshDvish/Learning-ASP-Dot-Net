@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Learning_ASP_Dot_Net.Data;
+using Learning_ASP_Dot_Net.Behaviours.Interfaces;
+using Learning_ASP_Dot_Net.Behaviours;
+using Learning_ASP_Dot_Net.DataAccess.Interfaces;
+using Learning_ASP_Dot_Net.DataAccess;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Adding DI
+builder.Services.AddScoped<IStudentControllBehaviour, StudentControllBehaviour>();
+builder.Services.AddScoped<IStudentControllDataAccess, StudentControllDataAccess>();
 
 // Add DbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
