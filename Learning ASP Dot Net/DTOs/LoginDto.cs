@@ -2,16 +2,10 @@
 
 namespace Learning_ASP_Dot_Net.DTOs
 {
-    public class CreateStudentDto
+    public class LoginDto
     {
         [Required]
-        public string Name { get; set; }
-
-        public int Age { get; set; }
-
         public string Email { get; set; }
-
         public string Password { get; set; }
-
     }
 }
